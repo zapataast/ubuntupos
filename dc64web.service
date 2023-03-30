@@ -1,0 +1,27 @@
+[Unit] 
+
+Description=Golomt Bank Terminal Dual Connector Service 
+
+After=network.target 
+
+  
+
+[Service] 
+
+Type=simple 
+
+ExecStart=/usr/bin/dotnet /opt/dc64web/WebApplication1/bin/Debug/netcoreapp2.1/WebApplication1.dll & 
+
+ExecStop=/usr/bin/kill -9 $MAINPID 
+
+Restart=on-failure 
+
+PrivateTmp=true 
+
+  
+
+[Install] 
+
+WantedBy=multi-user.target 
+
+Alias=dc64web.service 
