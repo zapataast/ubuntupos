@@ -1,0 +1,461 @@
+ 
+
+Ubuntu 20.04 POS installation 
+
+Boot бэлдэх  
+
+\\192.168.0.236\itid\4. OS  
+
+ 
+
+Boot file аа татан авч бэлдэх 
+
+\\192.168.0.236\itid\11. ServerPOS\Ubuntu POS  
+
+ 
+
+хавтсыг флаш дискэнд хуулан авах!!! 
+
+ 
+
+F12/,, 
+
+Safe graphic  
+
+Install ubuntu 
+
+Continue 	   
+
+Minimal installation #  -ыг чагтлаx 
+
+download updates # чагтыг идэвхгүй болгох 
+
+Erase disk > Install now > Continue 
+
+Ulaanbaatar > Next 
+
+Yourname: it 
+
+Computername: SxxPOS00*     XX-ийн оронд салбарын тоо байх. *оронд посын ip хаяг байх. 
+
+Username: it 
+
+Pass:Aa1234 
+
+Autologin Идэвхжүүлнэ үү 
+
+Skip хийж болохгүй !!! 
+
+Бэлэн болж ассаны дараа 
+
+sudo timedatectl set-timezone Asia/Ulaanbaatar 
+
+Sudo vim /etc/systemd/timesyncd.conf 
+
+NTP=10.**.1.1 
+
+Sudo systemctl restart systemd-timesyncd 
+
+Sudo apt update & upgrade 
+
+Алдаа заавал он сар цагыг шалгана уу. 
+
+Sudo nano /etc/default/grub-    #1 дэлгэцтэй холбосон дохиолдолд 
+
+Sudo apt install vim 
+
+Sudo vim /etc/default/grub 
+
+GRUB_CM//INE_LUNIX_DEFAULT мөрөн дотор засвар хийнэ.  
+
+GRUB_CMDLINE_LINUX_DEFAULT = “Quite splash video=eDP-1:d”   
+
+IPv6 disable Хийх 
+
+ vim /etc/default/grub 
+
+GRUB_CMDLINE_LINUX="ipv6.disable=1" 
+
+sudo update-grub  
+
+Setting>Displays>Resolution 1024x768 өөр хоёр дэлгэц тохируулж өгнө. Restart хийгээд 3 дахь дэлгэц алга болно.  
+
+IT autologin disable хийх 
+
+History формат тохируулах 
+
+echo 'HISTTIMEFORMAT="%F   %T   "' >> ~/.bashrc 
+
+source ~/.bashrc 
+
+echo 'HISTTIMEFORMAT="%F   %T   "' >> /etc/profile 
+
+source /etc/profile 
+
+Sudo wget https://repo.zabbix.com/zabbix/6.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_6.0-4%2Bubuntu20.04_all.deb 
+
+sudo dpkg -i zabbix-release_6.0-4+ubuntu20.04_all.deb 
+
+Sudo apt update 
+
+Sudo apt install zabbix-agent2 zabbix-agent2-plugin-* 
+
+sudo vim etc/zabbix/zabb.conf 
+
+server 
+
+active server 
+
+hostname 
+
+Sudo systemctl restart zabbix-agent2 
+
+ 
+sudo apt install net-tools 
+
+Sudo apt install openssh-server 
+
+sudo ufw enable 
+
+sudo ufw allow 22 
+
+sudo ufw allow 5900 
+
+sudo ufw allow 631 
+
+sudo ufw allow 27028 
+
+Дээрх шиг болгоно 
+
+Firefox browser устгах 
+
+Sudo apt-get purge firefox 
+
+Chromium суулгах 
+
+Sudo apt install chromium-browser 
+
+Zabbix Agent2 суулгах 
+
+wget https://repo.zabbix.com/zabbix/6.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_6.0-4%2Bubuntu20.04_all.deb 
+
+dpkg -i zabbix-release_6.0-4+ubuntu20.04_all.deb 
+
+apt update 
+
+apt install zabbix-agent2 zabbix-ag  ent2-plugin-* 
+
+sudo vim etc/zabbix/zabbix-agent2.conf 
+
+Өөрчлөх мөрүүд 
+
+Server:192.168.0.44 
+
+active server:192.168.0.44 
+
+Hostname: S**POS*** 
+
+systemctl restart zabbix-agent2 
+
+Sewoo printer installation 
+
+Флаш дискэнд хуулж авсан хавтаст файлаа Home хавтасд хуулж авна. (Sewoocups.. , goconnection) 
+
+Sudo apt-get install cups -y 
+
+Sudo systemctl start cups 
+
+Sudo systemctl enable cups  
+
+Sudo vim /etc/cups/cupsd.conf  
+
+ 
+
+Text
+
+Description automatically generated 
+
+Text
+
+Description automatically generated 
+
+Text
+
+Description automatically generated 
+
+Дээрх шиг өөрчлөн хадгалж гарах ( esc -> :wq -> enter ) 
+
+sudo systemctl restart cups 
+
+cd /home/it/sewoo tab дарна 
+
+sudo chmod +x setup.sh  
+
+sudo ./setup.sh 
+
+Browser-ээ нээгээд http://localhost:631/ гэж орон Administrator цонхонд нэр нууц үгээ хийнэ. 
+
+Add printer  
+
+Generic pos printer 
+
+Add ppd file > home sewoo – ppd – sewoolkt.ppd - next – complete 
+
+ Khanbank Goconnection суулгах 
+
+sudo adduser it dialout 
+
+groups it -> энэ коммандаар It хэрэглэгч dialout грүпд орсон эсэхийг шалгаж байна. 
+
+sudo chmod +x goconnection 
+
+sudo ./goconnection install 
+
+sudo ./goconnection start 
+
+Web browser дээр http://127.0.0.1:27028/ хаягаар шалгана. 
+
+Дээрх хаягаар орон холболтыг баталгаажуулна. 
+
+Төхөөрөмжтэй эсэх дээр 2 тогшин Q80 сонгох 
+
+ 
+
+ 
+
+ 
+
+Голомт терминал суулгах 
+
+wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb  
+
+sudo dpkg -i packages-microsoft-prod.deb  
+
+sudo apt update  
+
+sudo apt install apt-transport-https  
+
+sudo apt install dotnet-sdk-2.1 -y 
+
+Дээрх коммандаар dotnet core суулгаж байна. 
+
+cd /opt 
+
+wget http://192.168.0.44/dc64web.tar.gz 
+
+sudo tar -xzvf dc64web.tar.gz 
+
+sudo rm dc64web.tar.gz 
+
+cd dc64web/WebApplication1/ 
+
+sudo rm 'WebApplication1 - Backup.csproj' 
+
+sudo dotnet build 
+
+cd bin/Debug/netcoreapp2.1/ 
+
+sudo sed -i "s/<PORT>.*<\/PORT>/<PORT>\/dev\/ttyACM0<\/PORT>/g" DualConnector.xml 
+
+sudo vim /etc/systemd/system/dc64web.service 
+
+[Unit] 
+
+Description=Golomt Bank Terminal Dual Connector Service 
+
+After=network.target 
+
+  
+
+[Service] 
+
+Type=simple 
+
+ExecStart=/usr/bin/dotnet /opt/dc64web/WebApplication1/bin/Debug/netcoreapp2.1/WebApplication1.dll & 
+
+ExecStop=/usr/bin/kill -9 $MAINPID 
+
+Restart=on-failure 
+
+PrivateTmp=true 
+
+  
+
+[Install] 
+
+WantedBy=multi-user.target 
+
+Alias=dc64web.service 
+
+  
+
+sudo systemctl daemon-reload 
+
+sudo systemctl enable dc64web # already exist 
+
+sudo systemctl start dc64web 
+
+#Доорх коммандаар эхний Голомт терминалруу холболт амжилттай болсон эсэхийг шалгаж байна. 
+
+curl -X POST -i http://localhost:5000/api/terminal --data '{"operationCode":26,"terminal":"1314****"}' -H "Content-Type: application/json" 
+
+  
+
+sudo apt-get install nginx -y 
+
+sudo rm /etc/nginx/sites-available/default 
+
+sudo vim /etc/nginx/sites-available/default #юу ч бичилгүй шууд хадгалаад гарах shift + : wq 
+
+sudo vim /etc/nginx/sites-available/golomt 
+
+server { 
+
+ listen 5002; 
+
+ server_name _; 
+
+ location / { 
+
+   add_header Access-Control-Allow-Origin *; 
+
+   add_header Access-Control-Allow-Headers *; 
+
+   if ($request_method = OPTIONS) { 
+
+      return 204; 
+
+     } 
+
+   proxy_pass http://127.0.0.1:5000; 
+
+  } 
+
+} 
+
+ln -s /etc/nginx/sites-available/golomt /etc/nginx/sites-enabled/ 
+
+systemctl restart nginx 
+
+Failed to add a watch for /run/systemd/ask-password: inotify watch limit reached # гэх алдаа өгвөл 
+
+echo 1048576 > /proc/sys/fs/inotify/max_user_watches 
+
+systemctl restart nginx 
+
+ 
+
+Үүний дараа x11vnc суулгана. 
+
+ X11vnc -ийг зөвхөн cashier эрх дээр суулгах  
+
+Cashier эрх үүсгэх 
+
+Sudo adduser cashier 
+
+Password өгөх 
+
+Sudo usermod -aG sudo cashier  ингэснээр кассир sudo эрхтэй болно 
+
+Logout хийгээд Кассираар орж  x11vnc суулгана 
+
+Sudo vim /etc/gdm3/custom.conf 
+
+#WayLandEnable=false гэсний урд талын чагтыг нь арилгана , тэгээд Esc :wq буюу хадгална. 
+
+WaylandEnable=false 
+
+Дээрх шиг болгож # -ыг авна 
+
+Reboot 
+
+apt install x11vnc 
+
+exit 
+
+whoami 
+
+x11vnc -storepasswd 
+
+it#2022 
+
+it#2022 
+
+root эрхээс биш кассирын үүсгэсэн эрх дээрээс хийх комманд 
+
+whoami 
+
+x11vnc -display :0 -forever -shared -rfbauth /home/cashier/.vnc/passwd 
+
+дээрхийг бичхэд алдаа заавал хамаагүй үргэлжлүүлнэ. 
+
+whoami 
+
+vim x11vncstartup.sh 
+
+#!/usr/bin/bash 
+
+x11vnc -display :0 -forever -shared -rfbauth /home/cashier/.vnc/passwd 
+
+Дээрх 2 мөрийг хуулж хадгална. 
+Sudo chmod 755 x11vncstartup.sh 
+
+Файлаа execute файл болгож байна. 
+
+ 
+
+Дээрхi комманддаар ажиллаж байгаа эсэхийг шалгаж байна. 
+
+Алдаа заавал унтрааж асаана уу. 
+
+ 
+
+ 
+
+Graphical user interface, application
+
+Description automatically generated 
+
+Add >Browse >x11vncstartup.sh 
+
+Graphical user interface, application
+
+Description automatically generated 
+
+Graphical user interface, text, application, email
+
+Description automatically generated 
+
+Graphical user interface, application
+
+Description automatically generated 
+
+Chromium startup apps дээр идэвхжүүлэх 
+
+Startup Application руу орон Add дарах 
+
+Name: Autostart chromium 
+
+Command: chromium-browser http://10.34.1.220/ --start-fullscreen 
+
+Comment: Odoo start 
+
+Add  
+
+Cashier эрхээр шууд асдаг болгох 
+
+Settings -> user -> cashier -> autologin enable 
+
+Reboot 
+
+Ассаны дараа it эрхээр орон cashier эрхийн administrator эрхийг disable хийх. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
